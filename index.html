@@ -252,8 +252,14 @@
     /* Grid */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
+    }
+
+    #towns-section .card-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
     }
 
     /* Data Card */
@@ -265,6 +271,7 @@
       transition: all var(--transition);
       cursor: pointer;
       position: relative;
+      overflow: visible;
     }
 
     .data-card:hover {
@@ -273,11 +280,110 @@
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--accent-glow);
     }
 
+    .data-card-actions {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      display: flex;
+      gap: 2px;
+      z-index: 10;
+    }
+
+    .data-card-actions .close-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(239, 68, 68, 0.9);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: white;
+    }
+
+    .data-card-actions .close-btn:hover {
+      background: rgba(220, 38, 38, 0.9);
+      border-color: rgba(220, 38, 38, 0.5);
+    }
+
+    .data-card-actions .close-btn svg {
+      width: 10px;
+      height: 10px;
+    }
+
+    .character-card .data-card-body {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding-right: 0;
+    }
+
+    .character-card .data-card-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .character-card .data-card-avatar {
+      width: 64px;
+      height: 64px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      z-index: 1;
+    }
+
+    .character-card .data-card-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .character-card .data-card-avatar svg {
+      width: 32px;
+      height: 32px;
+      color: var(--text-primary);
+    }
+
+    .data-card-actions .btn.pinned svg {
+      fill: #ef4444;
+      color: #ef4444;
+    }
+
     .data-card-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       margin-bottom: 12px;
+      gap: 8px;
+    }
+
+    .character-card .data-card-header {
+      justify-content: flex-start;
+    }
+
+    .pin-btn {
+      width: 24px;
+      height: 24px;
+      padding: 0;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .pin-btn svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .pin-btn.pinned svg {
+      fill: #ef4444;
+      color: #ef4444;
     }
 
     .data-card-title {
@@ -350,16 +456,22 @@
     /* Modal */
     .modal-overlay {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       background: rgba(0, 0, 0, 0.7);
       backdrop-filter: blur(4px);
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
       z-index: 1000;
       opacity: 0;
       visibility: hidden;
       transition: all 300ms ease;
+      padding: 20px;
+      box-sizing: border-box;
+      padding-bottom: 15vh;
     }
 
     .modal-overlay.active {
@@ -371,18 +483,20 @@
       background: var(--primary);
       border-radius: var(--radius);
       border: 1px solid var(--border);
-      width: 90%;
+      width: 100%;
       max-width: 700px;
-      max-height: 90vh;
+      max-height: 80vh;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transform: scale(0.95);
-      transition: transform 300ms ease;
+      transform: scale(0.95) translateY(40px);
+      transition: all 300ms ease;
+      margin: auto;
+      position: relative;
     }
 
     .modal-overlay.active .modal {
-      transform: scale(1);
+      transform: scale(1) translateY(0);
     }
 
     .modal-header {
@@ -417,6 +531,170 @@
     /* Form */
     .form-group {
       margin-bottom: 20px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+
+    .form-grid .form-group {
+      margin-bottom: 0;
+    }
+
+    .form-grid .form-group.full-width {
+      grid-column: span 6;
+    }
+
+    .form-grid .form-group.half-width {
+      grid-column: span 3;
+    }
+
+    
+
+    /* Rich Text Editor */
+    .rich-text-editor {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .rich-text-toolbar {
+      display: flex;
+      gap: 4px;
+      padding: 8px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .rich-text-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all var(--transition);
+    }
+
+    .rich-text-btn:hover {
+      background: var(--primary);
+      color: var(--text-primary);
+    }
+
+    .rich-text-btn.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .rich-text-content {
+      padding: 12px;
+      min-height: 120px;
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--surface);
+    }
+
+    .rich-text-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      transition: background var(--transition);
+    }
+
+    .rich-text-item:hover {
+      background: var(--primary);
+    }
+
+    .rich-text-item-content {
+      flex: 1;
+      outline: none;
+      min-height: 24px;
+    }
+
+    .rich-text-item-actions {
+      display: flex;
+      gap: 4px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .rich-text-item:hover .rich-text-item-actions {
+      opacity: 1;
+    }
+
+    .rich-text-action-btn {
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all var(--transition);
+    }
+
+    .rich-text-action-btn:hover {
+      background: var(--accent);
+      color: white;
+    }
+
+    /* Combo Selector */
+    .combo-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .combo-selector select {
+      flex: 1;
+    }
+
+    /* Validation */
+    .form-input.error,
+    .form-textarea.error,
+    .form-select.error {
+      border-color: var(--error);
+    }
+
+    .form-error {
+      font-size: 0.75rem;
+      color: var(--error);
+      margin-top: 4px;
+      display: none;
+    }
+
+    .form-error.show {
+      display: block;
+    }
+
+    @media (max-width: 1200px) {
+      .form-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .form-grid .form-group.full-width {
+        grid-column: span 3;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-grid .form-group.full-width,
+      .form-grid .form-group.half-width {
+        grid-column: span 1;
+      }
     }
 
     .form-label {
@@ -605,6 +883,99 @@
       outline: none;
     }
 
+    .tag-add-btn {
+      display: none;
+      width: 44px;
+      height: 44px;
+      padding: 8px;
+      background: var(--accent);
+      color: var(--background);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: all var(--transition);
+    }
+
+    .tag-add-btn:hover {
+      filter: brightness(1.1);
+    }
+
+    .tag-add-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .tag-add-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 300ms ease;
+    }
+
+    .tag-add-modal.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .tag-add-modal .modal {
+      width: 90%;
+      max-width: 360px;
+      background: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .tag-add-modal .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .tag-add-modal .modal-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    .tag-add-modal .modal-body {
+      padding: 0;
+    }
+
+    .tag-add-modal .form-input {
+      margin-bottom: 16px;
+    }
+
+    .tag-add-modal .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .tag-add-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .tag-container .tag-input {
+        min-width: 80px;
+      }
+    }
+
     /* List Input */
     .list-input-container {
       display: flex;
@@ -613,6 +984,10 @@
 
     .list-input-container .form-input {
       flex: 1;
+    }
+
+    .list-input-container .btn {
+      min-width: 80px;
     }
 
     .list-items {
@@ -626,21 +1001,516 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 10px 14px;
+      padding: 12px 14px;
       background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.9rem;
+      transition: all var(--transition);
+    }
+
+    .list-item:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+    }
+
+    .list-item-content {
+      flex: 1;
+      word-break: break-word;
+    }
+
+    .list-item-actions {
+      display: flex;
+      gap: 6px;
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .list-item:hover .list-item-actions {
+      opacity: 1;
+    }
+
+    .list-item-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
       border-radius: 6px;
+      cursor: pointer;
+      transition: all var(--transition);
+      background: transparent;
+    }
+
+    .list-item-btn.remove {
+      color: var(--error);
+    }
+
+    .list-item-btn.remove:hover {
+      background: rgba(248, 113, 113, 0.15);
+    }
+
+    .list-item-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .list-empty-state {
+      text-align: center;
+      padding: 20px;
+      color: var(--text-secondary);
       font-size: 0.9rem;
     }
 
-    .list-item-remove {
-      color: var(--error);
-      cursor: pointer;
-      opacity: 0.7;
-      transition: opacity 200ms;
+    .list-item-input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 2px solid var(--accent);
+      border-radius: 6px;
+      background: var(--primary);
+      color: var(--text-primary);
+      font-size: 0.9rem;
+      outline: none;
     }
 
-    .list-item-remove:hover {
+    @media (max-width: 768px) {
+      .list-item-actions {
+        opacity: 1;
+      }
+
+      .list-item-btn {
+        width: 44px;
+        height: 44px;
+      }
+
+      .list-item-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    /* Region Overview */
+    .region-overview {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .region-overview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .region-overview-header h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      margin: 0;
+    }
+
+    .region-overview-header .btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .region-overview-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+
+    .region-overview-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px;
+      background: var(--primary);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .region-overview-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .region-overview-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+
+    .region-overview-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .region-overview-icon.land {
+      background: rgba(76, 175, 80, 0.15);
+      color: #4CAF50;
+    }
+
+    .region-overview-icon.ocean {
+      background: rgba(33, 150, 243, 0.15);
+      color: #2196F3;
+    }
+
+    .region-overview-icon.country {
+      background: rgba(156, 39, 176, 0.15);
+      color: #9C27B0;
+    }
+
+    .region-overview-icon.town {
+      background: rgba(255, 152, 0, 0.15);
+      color: #FF9800;
+    }
+
+    .region-overview-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .region-overview-label {
+      font-size: 0.85rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .region-overview-count {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .region-quick-list {
+      margin-top: 40px;
+      margin-bottom: 16px;
+      clear: both;
+      position: relative;
+      z-index: 0;
+    }
+
+    .region-quick-list h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+    }
+
+    .region-quick-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+
+    .region-quick-items .data-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .region-quick-items .data-card-content {
+      flex: 1;
+      padding-bottom: 8px;
+    }
+
+    .region-quick-items .data-card-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    /* Region Type Selector */
+    .region-type-selector {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 20px 0;
+    }
+
+    .region-type-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px 16px;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+    }
+
+    .region-type-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .region-type-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      margin: 0 auto 12px;
+    }
+
+    .region-type-icon svg {
+      width: 28px;
+      height: 28px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .region-type-icon.land {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.1));
+      color: #059669;
+    }
+
+    .region-type-icon.country {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(99, 102, 241, 0.1));
+      color: #4f46e5;
+    }
+
+    .region-type-icon.town {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));
+      color: #d97706;
+    }
+
+    .region-type-card h4 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+
+    .region-type-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+      .region-type-selector {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Region Detail Modal */
+    .region-detail-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .region-detail-section {
+      background: var(--primary);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all var(--transition);
+      min-height: 350px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .region-detail-section.highlighted {
+      transform: translateY(-4px);
+    }
+
+    /* Land Section */
+    .region-detail-section.land-section {
+      border: 2px solid #10b981;
+      box-shadow: 0 4px 20px rgba(16, 185, 129, 0.15);
+    }
+
+    .region-detail-section.land-section .region-detail-header {
+      background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+      border-bottom: 2px solid #10b981;
+    }
+
+    /* Country Section */
+    .region-detail-section.country-section {
+      border: 2px solid #6366f1;
+      box-shadow: 0 4px 20px rgba(99, 102, 241, 0.15);
+    }
+
+    .region-detail-section.country-section .region-detail-header {
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+      border-bottom: 2px solid #6366f1;
+    }
+
+    /* Town Section */
+    .region-detail-section.town-section {
+      border: 2px solid #f59e0b;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.15);
+    }
+
+    .region-detail-section.town-section .region-detail-header {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-bottom: 2px solid #f59e0b;
+    }
+
+    .region-detail-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .region-detail-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+    }
+
+    .region-detail-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+    }
+
+    .region-detail-icon.land-icon {
+      background: rgba(16, 185, 129, 0.2);
+      color: #059669;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .region-detail-icon.country-icon {
+      background: rgba(99, 102, 241, 0.2);
+      color: #4f46e5;
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .region-detail-icon.town-icon {
+      background: rgba(245, 158, 11, 0.2);
+      color: #d97706;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .region-detail-header h4 {
+      flex: 1;
+      margin: 0;
+      font-size: 0.95rem;
+      font-family: 'Cinzel', serif;
+      color: #1f2937;
+      font-weight: 600;
+    }
+
+    .region-detail-count {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      background: var(--surface);
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+
+    .region-detail-content {
+      padding: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .region-detail-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background var(--transition);
+    }
+
+    .region-detail-item:hover {
+      background: var(--surface);
+    }
+
+    .region-detail-item-name {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .region-detail-item-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-right: 6px;
+    }
+
+    .region-detail-item-badge.allies {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4CAF50;
+    }
+
+    .region-detail-item-badge.enemies {
+      background: rgba(244, 67, 54, 0.2);
+      color: #F44336;
+    }
+
+    .region-detail-item-action {
+      font-size: 0.75rem;
+      color: var(--accent);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+
+    .region-detail-item:hover .region-detail-item-action {
       opacity: 1;
+    }
+
+    .region-detail-empty {
+      padding: 24px 12px;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .region-detail-footer {
+      padding: 12px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .region-detail-footer .btn {
+      width: 100%;
+      font-size: 0.85rem;
+      padding: 8px 12px;
+    }
+
+    @media (max-width: 768px) {
+      .region-overview-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .region-detail-container {
+        grid-template-columns: 1fr;
+      }
+
+      .region-detail-section {
+        min-height: 280px;
+      }
     }
 
     /* Relationship Select */
@@ -712,9 +1582,218 @@
       to { transform: translateX(0); opacity: 1; }
     }
 
+    /* Star Map */
+    .star-map-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .star-map-canvas {
+      width: 100%;
+      height: 600px;
+      background: radial-gradient(ellipse at center, rgba(30, 30, 60, 0.9) 0%, var(--surface) 100%);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .star-map-canvas::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
+        radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.2), transparent),
+        radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 200px 50px, rgba(255,255,255,0.25), transparent),
+        radial-gradient(1px 1px at 250px 150px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(2px 2px at 300px 90px, rgba(255,255,255,0.2), transparent);
+      background-size: 350px 200px;
+      animation: twinkle 4s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.8; }
+    }
+
+    .star-node {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .star-node:hover {
+      transform: scale(1.3);
+      z-index: 20;
+    }
+
+    .star-node.land {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.5);
+    }
+
+    .star-node.ocean {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+
+    .star-node.country {
+      background: linear-gradient(135deg, #a855f7, #9333ea);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+    }
+
+    .star-node.town {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.5);
+    }
+
+    .star-node.level-1 {
+      width: 40px;
+      height: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    .star-node.level-2 {
+      width: 28px;
+      height: 28px;
+      font-size: 0.6rem;
+    }
+
+    .star-node.level-3 {
+      width: 20px;
+      height: 20px;
+      font-size: 0.5rem;
+    }
+
+    .star-node.selected {
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 20px currentColor; }
+      50% { box-shadow: 0 0 30px currentColor, 0 0 40px currentColor; }
+    }
+
+    .star-label {
+      position: absolute;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .star-line {
+      position: absolute;
+      background: linear-gradient(90deg, var(--accent), transparent);
+      height: 2px;
+      transform-origin: left center;
+      z-index: 1;
+    }
+
+    .star-map-legend {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .legend-dot.land {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .legend-dot.ocean {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    .legend-dot.country {
+      background: linear-gradient(135deg, #a855f7, #9333ea);
+    }
+
+    .legend-dot.town {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+    }
+
+    .star-tooltip {
+      position: absolute;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 0.85rem;
+      pointer-events: none;
+      z-index: 100;
+      min-width: 150px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .star-tooltip h4 {
+      margin: 0 0 8px 0;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    .star-tooltip p {
+      margin: 4px 0;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    .star-tooltip .tooltip-type {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      background: rgba(255,255,255,0.1);
+      margin-bottom: 8px;
+    }
+
     /* Confirm Dialog */
+    .confirm-dialog {
+      align-items: center !important;
+      padding-bottom: 20px !important;
+    }
+
     .confirm-dialog .modal {
       max-width: 400px;
+      transform: scale(0.95) !important;
+    }
+
+    .confirm-dialog.active .modal {
+      transform: scale(1) !important;
     }
 
     .confirm-dialog .modal-body {
@@ -1065,11 +2144,15 @@
         </div>
         <div class="nav-item" data-section="towns">
           <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
-          <span>城镇设定</span>
+          <span>地区设定</span>
         </div>
         <div class="nav-item" data-section="races">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
           <span>种族设定</span>
+        </div>
+        <div class="nav-item" data-section="star-map">
+          <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>星图</span>
         </div>
       </nav>
       <div class="sidebar-footer">
@@ -1116,8 +2199,8 @@
         <section class="section" id="towns-section">
           <div class="section-header">
             <div>
-              <h2>城镇设定</h2>
-              <p class="section-desc">定义你的世界中的城市与聚落</p>
+              <h2>地区设定</h2>
+              <p class="section-desc">定义你的世界中的大陆、国家与城镇</p>
             </div>
           </div>
           <div class="card-grid" id="towns-grid"></div>
@@ -1133,6 +2216,37 @@
           </div>
           <div class="card-grid" id="races-grid"></div>
         </section>
+
+        <!-- Star Map Section -->
+        <section class="section" id="star-map-section">
+          <div class="section-header">
+            <div>
+              <h2>星图</h2>
+              <p class="section-desc">可视化地区层级关系</p>
+            </div>
+          </div>
+          <div class="star-map-container">
+            <div class="star-map-canvas" id="star-map-canvas"></div>
+            <div class="star-map-legend">
+              <div class="legend-item">
+                <span class="legend-dot land"></span>
+                <span>板块</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot ocean"></span>
+                <span>海洋</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot country"></span>
+                <span>国家</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot town"></span>
+                <span>城镇</span>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
 
@@ -1145,11 +2259,15 @@
         </div>
         <div class="mobile-nav-item" data-section="towns">
           <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
-          <span>城镇</span>
+          <span>地区</span>
         </div>
         <div class="mobile-nav-item" data-section="races">
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
           <span>种族</span>
+        </div>
+        <div class="mobile-nav-item" data-section="star-map">
+          <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><circle cx="12" cy="12" r="3"/></svg>
+          <span>星图</span>
         </div>
       </div>
     </nav>
@@ -1183,6 +2301,22 @@
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="closeConfirmDialog()">取消</button>
         <button class="btn btn-primary" id="confirmBtn" onclick="confirmAction()">确认</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Region Detail Modal -->
+  <div class="modal-overlay" id="regionDetailModal">
+    <div class="modal" style="max-width: 900px;">
+      <div class="modal-header">
+        <h2 class="modal-title">地区详情</h2>
+        <button class="btn btn-icon btn-ghost" onclick="closeRegionDetailModal()">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeRegionDetailModal()">关闭</button>
       </div>
     </div>
   </div>
@@ -1226,6 +2360,25 @@
       <div class="modal-footer">
         <button class="btn btn-ghost" onclick="closeCropModal()">取消</button>
         <button class="btn btn-primary" onclick="applyCrop()">确认裁剪</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tag Add Modal -->
+  <div class="tag-add-modal" id="tagAddModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span class="modal-title">添加性格标签</span>
+        <button class="btn btn-icon btn-ghost" onclick="closeTagAddModal()">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-input" id="tagInput" placeholder="输入性格特点">
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-ghost" onclick="closeTagAddModal()">取消</button>
+        <button class="btn btn-primary" onclick="addTagFromModal()">确认添加</button>
       </div>
     </div>
   </div>
@@ -1308,7 +2461,7 @@
       });
 
       // Update title
-      const titles = { characters: '人物卡', towns: '城镇设定', races: '种族设定' };
+      const titles = { characters: '人物卡', towns: '地区设定', races: '种族设定' };
       document.getElementById('pageTitle').textContent = titles[section];
 
       // Render
@@ -1322,7 +2475,8 @@
       const renderers = {
         characters: renderCharacters,
         towns: renderTowns,
-        races: renderRaces
+        races: renderRaces,
+        'star-map': renderStarMap
       };
       renderers[currentSection]();
     }
@@ -1345,17 +2499,29 @@
       }
 
       grid.innerHTML = items.map(char => `
-        <div class="data-card" onclick="editItem('characters', '${char.id}')">
+        <div class="data-card character-card" onclick="editItem('characters', '${char.id}')">
           <div class="data-card-actions">
-            <button class="btn btn-icon btn-ghost" onclick="event.stopPropagation(); deleteItem('characters', '${char.id}')">
-              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <button class="btn btn-icon btn-ghost close-btn" onclick="event.stopPropagation(); deleteItem('characters', '${char.id}')" title="删除">
+              <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
             </button>
           </div>
-          <div class="data-card-header">
-            <span class="data-card-title">${escapeHtml(char.name)}</span>
-            ${char.race ? `<span class="data-card-type">${escapeHtml(char.race)}</span>` : ''}
+          <div class="data-card-body">
+            <div class="data-card-info">
+              <div class="data-card-header">
+                <button class="btn btn-icon btn-ghost pin-btn ${char.pinned ? 'pinned' : ''}" onclick="event.stopPropagation(); togglePin('characters', '${char.id}')" title="${char.pinned ? '取消置顶' : '置顶'}">
+                  <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </button>
+                <span class="data-card-title">${escapeHtml(char.name)}</span>
+                ${char.race ? `<span class="data-card-type">${escapeHtml(char.race)}</span>` : ''}
+              </div>
+              <div class="data-card-content">${escapeHtml(char.occupation || char.title || '暂无职业')}</div>
+            </div>
+            <div class="data-card-avatar">
+              ${char.avatar ? `<img src="${char.avatar}" alt="${escapeHtml(char.name)}" />` : `
+                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              `}
+            </div>
           </div>
-          <div class="data-card-content">${escapeHtml(char.occupation || char.title || '暂无职业')}</div>
         </div>
       `).join('');
     }
@@ -1364,32 +2530,196 @@
       const grid = document.getElementById('towns-grid');
       const items = data.towns;
 
+      // Group items by type
+      const landItems = items.filter(t => t.regionType === 'land');
+      const oceanItems = items.filter(t => t.regionType === 'ocean');
+      const countryItems = items.filter(t => t.regionType === 'country');
+      const townItems = items.filter(t => t.regionType === 'town');
+      const untypedItems = items.filter(t => !t.regionType || t.regionType === '');
+
       if (items.length === 0) {
         grid.innerHTML = `
           <div class="empty-state">
             <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
-            <h3>暂无城镇</h3>
-            <p>点击"新建"按钮创建第一个城镇</p>
-            <button class="btn btn-primary" onclick="openCreateModal()">创建城镇</button>
+            <h3>暂无地区</h3>
+            <p>点击"新建"按钮创建第一个地区</p>
+            <button class="btn btn-primary" onclick="openCreateModal()">创建地区</button>
           </div>
         `;
         return;
       }
 
-      grid.innerHTML = items.map(town => `
-        <div class="data-card" onclick="editItem('towns', '${town.id}')">
-          <div class="data-card-actions">
-            <button class="btn btn-icon btn-ghost" onclick="event.stopPropagation(); deleteItem('towns', '${town.id}')">
-              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+      grid.innerHTML = `
+        <div class="region-overview">
+          <div class="region-overview-header">
+            <h3>地区总览</h3>
+            <button class="btn btn-primary" onclick="openRegionDetailModal()">
+              <svg viewBox="0 0 24 24" width="16" height="16"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              查看详情
             </button>
           </div>
-          <div class="data-card-header">
-            <span class="data-card-title">${escapeHtml(town.name)}</span>
-            ${town.terrain ? `<span class="data-card-type">${escapeHtml(town.terrain)}</span>` : ''}
+          <div class="region-overview-grid">
+            <div class="region-overview-card" onclick="openRegionDetailModal('land')">
+              <div class="region-overview-icon land">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <div class="region-overview-info">
+                <span class="region-overview-label">板块</span>
+                <span class="region-overview-count">${landItems.length} 个</span>
+              </div>
+            </div>
+            <div class="region-overview-card" onclick="openRegionDetailModal('ocean')">
+              <div class="region-overview-icon ocean">
+                <svg viewBox="0 0 24 24"><path d="M2 12c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2"/><path d="M2 17c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2"/><path d="M2 7c1.5-1.5 3-2 5-2s3.5.5 5 2 3 2 5 2 3.5-.5 5-2"/></svg>
+              </div>
+              <div class="region-overview-info">
+                <span class="region-overview-label">海洋</span>
+                <span class="region-overview-count">${oceanItems.length} 个</span>
+              </div>
+            </div>
+            <div class="region-overview-card" onclick="openRegionDetailModal('country')">
+              <div class="region-overview-icon country">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+              </div>
+              <div class="region-overview-info">
+                <span class="region-overview-label">国家</span>
+                <span class="region-overview-count">${countryItems.length} 个</span>
+              </div>
+            </div>
+            <div class="region-overview-card" onclick="openRegionDetailModal('town')">
+              <div class="region-overview-icon town">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
+              </div>
+              <div class="region-overview-info">
+                <span class="region-overview-label">城镇</span>
+                <span class="region-overview-count">${townItems.length} 个</span>
+              </div>
+            </div>
           </div>
-          <div class="data-card-content">${escapeHtml(town.population ? `人口: ${town.population}` : town.climate || '暂无描述')}</div>
         </div>
-      `).join('');
+        <div class="region-quick-list">
+          <h3>最近添加</h3>
+          <div class="region-quick-items">
+            ${items.slice(0, 6).map(town => `
+              <div class="data-card" onclick="editItem('towns', '${town.id}')">
+                <div class="data-card-actions">
+                  <button class="btn btn-icon btn-ghost close-btn" onclick="event.stopPropagation(); deleteItem('towns', '${town.id}')" title="删除">
+                    <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+                  </button>
+                </div>
+                <div class="data-card-header">
+                  <span class="data-card-title">${escapeHtml(town.name)}</span>
+                </div>
+                <div class="data-card-content">
+                  <span>${escapeHtml(town.population ? `人口: ${town.population}` : town.climate || '暂无描述')}</span>
+                </div>
+                <div class="data-card-footer">
+                  <span class="data-card-type">${getRegionTypeName(town.regionType)}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function getRegionTypeName(type) {
+      const types = {
+        'land': '板块',
+        'ocean': '海洋',
+        'country': '国家',
+        'town': '城镇'
+      };
+      return types[type] || '未分类';
+    }
+
+    function openRegionDetailModal(filterType = null) {
+      const items = data.towns;
+      const landItems = items.filter(t => t.regionType === 'land');
+      const countryItems = items.filter(t => t.regionType === 'country');
+      const townItems = items.filter(t => t.regionType === 'town');
+
+      const modal = document.getElementById('regionDetailModal');
+      modal.querySelector('.modal-body').innerHTML = `
+        <div class="region-detail-container">
+          <div class="region-detail-section land-section" data-type="land">
+            <div class="region-detail-header">
+              <div class="region-detail-icon land-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+              </div>
+              <h4>板块</h4>
+              <span class="region-detail-count">${landItems.length} 个</span>
+            </div>
+            <div class="region-detail-content">
+              ${landItems.length > 0 ? landItems.map(town => `
+                <div class="region-detail-item" onclick="editItem('towns', '${town.id}')">
+                  <span class="region-detail-item-name">${escapeHtml(town.name)}</span>
+                  <span class="region-detail-item-action">编辑</span>
+                </div>
+              `).join('') : '<div class="region-detail-empty">暂无板块</div>'}
+            </div>
+          </div>
+          <div class="region-detail-section country-section" data-type="country">
+            <div class="region-detail-header">
+              <div class="region-detail-icon country-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+              </div>
+              <h4>国家</h4>
+              <span class="region-detail-count">${countryItems.length} 个</span>
+            </div>
+            <div class="region-detail-content">
+              ${countryItems.length > 0 ? countryItems.map(town => `
+                <div class="region-detail-item" onclick="editItem('towns', '${town.id}')">
+                  <span class="region-detail-item-name">${escapeHtml(town.name)}</span>
+                  ${town.allies && town.allies.length > 0 ? `<span class="region-detail-item-badge allies" title="联盟对象">盟</span>` : ''}
+                  ${town.enemies && town.enemies.length > 0 ? `<span class="region-detail-item-badge enemies" title="敌对对象">敌</span>` : ''}
+                  <span class="region-detail-item-action">编辑</span>
+                </div>
+              `).join('') : '<div class="region-detail-empty">暂无国家</div>'}
+            </div>
+          </div>
+          <div class="region-detail-section town-section" data-type="town">
+            <div class="region-detail-header">
+              <div class="region-detail-icon town-icon">
+                <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
+              </div>
+              <h4>城镇</h4>
+              <span class="region-detail-count">${townItems.length} 个</span>
+            </div>
+            <div class="region-detail-content">
+              ${townItems.length > 0 ? townItems.map(town => `
+                <div class="region-detail-item" onclick="editItem('towns', '${town.id}')">
+                  <span class="region-detail-item-name">${escapeHtml(town.name)}</span>
+                  ${town.allies && town.allies.length > 0 ? `<span class="region-detail-item-badge allies" title="联盟对象">盟</span>` : ''}
+                  ${town.enemies && town.enemies.length > 0 ? `<span class="region-detail-item-badge enemies" title="敌对对象">敌</span>` : ''}
+                  <span class="region-detail-item-action">编辑</span>
+                </div>
+              `).join('') : '<div class="region-detail-empty">暂无城镇</div>'}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // If filterType is specified, highlight that section
+      if (filterType) {
+        modal.querySelectorAll('.region-detail-section').forEach(section => {
+          if (section.dataset.type === filterType) {
+            section.classList.add('highlighted');
+          } else {
+            section.classList.remove('highlighted');
+          }
+        });
+      } else {
+        modal.querySelectorAll('.region-detail-section').forEach(section => {
+          section.classList.remove('highlighted');
+        });
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeRegionDetailModal() {
+      document.getElementById('regionDetailModal').classList.remove('active');
     }
 
     function renderRaces() {
@@ -1411,8 +2741,8 @@
       grid.innerHTML = items.map(race => `
         <div class="data-card" onclick="editItem('races', '${race.id}')">
           <div class="data-card-actions">
-            <button class="btn btn-icon btn-ghost" onclick="event.stopPropagation(); deleteItem('races', '${race.id}')">
-              <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            <button class="btn btn-icon btn-ghost close-btn" onclick="event.stopPropagation(); deleteItem('races', '${race.id}')" title="删除">
+              <svg viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
             </button>
           </div>
           <div class="data-card-header">
@@ -1424,13 +2754,285 @@
       `).join('');
     }
 
+    // Star Map Render Function
+    function renderStarMap() {
+      const canvas = document.getElementById('star-map-canvas');
+      const towns = data.towns;
+      
+      // Group by type and build hierarchy
+      const landItems = towns.filter(t => t.regionType === 'land');
+      const oceanItems = towns.filter(t => t.regionType === 'ocean');
+      const countryItems = towns.filter(t => t.regionType === 'country');
+      const townItems = towns.filter(t => t.regionType === 'town');
+
+      // Build hierarchy: continents/oceans -> countries -> towns
+      const buildHierarchy = () => {
+        const hierarchy = [];
+        
+        // Level 1: Continents and Oceans
+        [...landItems, ...oceanItems].forEach(item => {
+          const countries = countryItems.filter(c => c.belongsTo === item.name);
+          const towns = townItems.filter(t => t.belongsTo === item.name || 
+            countries.some(country => t.belongsTo === country.name));
+          
+          hierarchy.push({
+            item,
+            level: 1,
+            children: countries.map(country => ({
+              item: country,
+              level: 2,
+              children: townItems.filter(t => t.belongsTo === country.name).map(t => ({
+                item: t,
+                level: 3,
+                children: []
+              }))
+            }))
+          });
+        });
+        
+        // Add orphan countries (not belonging to any continent)
+        const orphanCountries = countryItems.filter(c => !landItems.some(l => c.belongsTo === l.name) && 
+          !oceanItems.some(o => c.belongsTo === o.name));
+        orphanCountries.forEach(country => {
+          hierarchy.push({
+            item: country,
+            level: 1,
+            children: townItems.filter(t => t.belongsTo === country.name).map(t => ({
+              item: t,
+              level: 2,
+              children: []
+            }))
+          });
+        });
+        
+        // Add orphan towns
+        const orphanTowns = townItems.filter(t => !countryItems.some(c => t.belongsTo === c.name) &&
+          !landItems.some(l => t.belongsTo === l.name) &&
+          !oceanItems.some(o => t.belongsTo === o.name));
+        orphanTowns.forEach(town => {
+          hierarchy.push({
+            item: town,
+            level: 1,
+            children: []
+          });
+        });
+        
+        return hierarchy;
+      };
+
+      const hierarchy = buildHierarchy();
+      
+      if (towns.length === 0) {
+        canvas.innerHTML = `
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: var(--text-secondary);">
+            <svg viewBox="0 0 24 24" style="width: 64px; height: 64px; margin-bottom: 16px; opacity: 0.5;"><path d="M12 2L15.09 8.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/><circle cx="12" cy="12" r="3"/></svg>
+            <h3 style="margin-bottom: 8px;">暂无地区数据</h3>
+            <p>在"地区设定"中添加大陆、海洋、国家和城镇后，星图会自动显示层级关系</p>
+          </div>
+        `;
+        return;
+      }
+
+      // Generate star map layout
+      const canvasWidth = canvas.offsetWidth || 800;
+      const canvasHeight = canvas.offsetHeight || 600;
+      const centerX = canvasWidth / 2;
+      const centerY = canvasHeight / 2;
+      
+      let html = '';
+      const nodes = [];
+      const lines = [];
+
+      // Calculate positions for level 1 nodes (continents/oceans)
+      const level1Count = hierarchy.length;
+      const level1Radius = Math.min(canvasWidth, canvasHeight) * 0.25;
+      
+      hierarchy.forEach((node, index) => {
+        const angle = (index / level1Count) * Math.PI * 2 - Math.PI / 2;
+        const x = centerX + Math.cos(angle) * level1Radius;
+        const y = centerY + Math.sin(angle) * level1Radius;
+        
+        nodes.push({
+          ...node,
+          x,
+          y,
+          id: node.item.id
+        });
+        
+        // Draw line from center to level 1 node
+        lines.push({
+          fromX: centerX,
+          fromY: centerY,
+          toX: x,
+          toY: y
+        });
+        
+        // Process level 2 nodes (countries)
+        const level2Radius = 100;
+        node.children.forEach((child, childIndex) => {
+          const childAngle = angle + ((childIndex - (child.level === 2 ? node.children.length - 1 : node.children.length - 1) / 2) * 0.5);
+          const childX = x + Math.cos(childAngle) * level2Radius;
+          const childY = y + Math.sin(childAngle) * level2Radius;
+          
+          nodes.push({
+            ...child,
+            x: childX,
+            y: childY,
+            id: child.item.id
+          });
+          
+          lines.push({
+            fromX: x,
+            fromY: y,
+            toX: childX,
+            toY: childY
+          });
+          
+          // Process level 3 nodes (towns)
+          const level3Radius = 60;
+          child.children.forEach((town, townIndex) => {
+            const townAngle = childAngle + ((townIndex - (child.children.length - 1) / 2) * 0.4);
+            const townX = childX + Math.cos(townAngle) * level3Radius;
+            const townY = childY + Math.sin(townAngle) * level3Radius;
+            
+            nodes.push({
+              ...town,
+              x: townX,
+              y: townY,
+              id: town.item.id
+            });
+            
+            lines.push({
+              fromX: childX,
+              fromY: childY,
+              toX: townX,
+              toY: townY
+            });
+          });
+        });
+      });
+
+      // Draw lines
+      lines.forEach(line => {
+        const length = Math.sqrt(Math.pow(line.toX - line.fromX, 2) + Math.pow(line.toY - line.fromY, 2));
+        const angle = Math.atan2(line.toY - line.fromY, line.toX - line.fromX) * (180 / Math.PI);
+        
+        html += `
+          <div class="star-line"
+               style="left: ${line.fromX}px; top: ${line.fromY}px; width: ${length}px; transform: rotate(${angle}deg);">
+          </div>
+        `;
+      });
+
+      // Draw center node
+      html += `
+        <div class="star-node land level-1" 
+             style="left: ${centerX - 20}px; top: ${centerY - 20}px; color: white;">
+          <svg viewBox="0 0 24 24" style="width: 20px; height: 20px; fill: currentColor;">
+            <path d="M12 2L15.09 8.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+          </svg>
+        </div>
+        <div class="star-label" style="left: ${centerX + 25}px; top: ${centerY - 10}px;">世界</div>
+      `;
+
+      // Draw nodes
+      nodes.forEach(node => {
+        const type = node.item.regionType;
+        const size = node.level === 1 ? 40 : node.level === 2 ? 28 : 20;
+        const offset = size / 2;
+        const labelOffset = size + 4;
+        
+        html += `
+          <div class="star-node ${type} level-${node.level}" 
+               style="left: ${node.x - offset}px; top: ${node.y - offset}px;"
+               data-id="${node.id}" data-name="${escapeHtml(node.item.name)}">
+            ${node.item.name.charAt(0)}
+          </div>
+          <div class="star-label" style="left: ${node.x + labelOffset}px; top: ${node.y - 8}px;">
+            ${escapeHtml(node.item.name)}
+          </div>
+        `;
+      });
+
+      canvas.innerHTML = html;
+
+      // Add click events
+      canvas.addEventListener('click', (e) => {
+        const target = e.target.closest('.star-node');
+        if (target) {
+          const id = target.dataset.id;
+          editItem('towns', id);
+        }
+      });
+    }
+
     // Modal Functions
     function openCreateModal() {
       currentEditId = null;
-      const titles = { characters: '新建人物', towns: '新建城镇', races: '新建种族' };
-      document.getElementById('modalTitle').textContent = titles[currentSection];
-      renderForm();
+      
+      if (currentSection === 'towns') {
+        document.getElementById('modalTitle').textContent = '新建地区';
+        renderRegionTypeSelector();
+      } else {
+        const titles = { characters: '新建人物', towns: '新建地区', races: '新建种族' };
+        document.getElementById('modalTitle').textContent = titles[currentSection];
+        renderForm();
+      }
+      
       document.getElementById('createModal').classList.add('active');
+    }
+
+    function renderRegionTypeSelector() {
+      const modalBody = document.getElementById('createModal').querySelector('.modal-body');
+      modalBody.innerHTML = `
+        <div class="region-type-selector">
+          <div class="region-type-card" onclick="startCreateRegion('land')">
+            <div class="region-type-icon land">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            </div>
+            <h4>板块</h4>
+            <p>创建一个新的板块</p>
+          </div>
+          <div class="region-type-card" onclick="startCreateRegion('country')">
+            <div class="region-type-icon country">
+              <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+            </div>
+            <h4>国家</h4>
+            <p>创建一个新的国家，可设置联盟和敌对关系</p>
+          </div>
+          <div class="region-type-card" onclick="startCreateRegion('town')">
+            <div class="region-type-icon town">
+              <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01"/><path d="M9 12v.01"/><path d="M9 15v.01"/><path d="M9 18v.01"/></svg>
+            </div>
+            <h4>城镇</h4>
+            <p>创建一个新的城镇，可设置联盟和敌对关系</p>
+          </div>
+        </div>
+      `;
+    }
+
+    function startCreateRegion(regionType) {
+      currentSection = 'towns';
+      currentEditId = null;
+      
+      const typeNames = { land: '板块', country: '国家', town: '城镇' };
+      document.getElementById('modalTitle').textContent = `新建${typeNames[regionType]}`;
+      
+      const defaultItem = {
+        id: '',
+        name: '',
+        regionType: regionType,
+        description: '',
+        allies: [],
+        enemies: []
+      };
+      
+      renderForm(defaultItem);
+    }
+
+    function createRegion(regionType = 'land') {
+      startCreateRegion(regionType);
+      document.getElementById('regionDetailModal').classList.remove('active');
     }
 
     function editItem(type, id) {
@@ -1439,7 +3041,10 @@
       const item = data[type].find(i => i.id === id);
       if (!item) return;
 
-      const titles = { characters: '编辑人物', towns: '编辑城镇', races: '编辑种族' };
+      // 关闭地区详情模态框
+      document.getElementById('regionDetailModal').classList.remove('active');
+
+      const titles = { characters: '编辑人物', towns: '编辑地区', races: '编辑种族' };
       document.getElementById('modalTitle').textContent = titles[type];
       renderForm(item);
       document.getElementById('createModal').classList.add('active');
@@ -1464,8 +3069,8 @@
       const raceOptions = data.races.map(r => `<option value="${escapeHtml(r.name)}" ${char && char.race === r.name ? 'selected' : ''}>${escapeHtml(r.name)}</option>`).join('');
       const charOptions = data.characters.filter(c => c.id !== char?.id).map(c => `<option value="${escapeHtml(c.name)}">${escapeHtml(c.name)}</option>`).join('');
       const avatarValue = char?.avatar || '';
-      const isEmoji = avatarValue && !avatarValue.startsWith('http');
-      const avatarDisplay = avatarValue ? (isEmoji ? avatarValue : `<img src="${escapeHtml(avatarValue)}" alt="头像">`) : '?';
+      const isImageUrl = avatarValue && (avatarValue.startsWith('http') || avatarValue.startsWith('data:image'));
+      const avatarDisplay = avatarValue ? (isImageUrl ? `<img src="${escapeHtml(avatarValue)}" alt="头像">` : escapeHtml(avatarValue)) : '?';
       
       return `
         <form id="itemForm">
@@ -1535,8 +3140,11 @@
           <div class="form-group">
             <label class="form-label">性格特点</label>
             <div class="tag-container" data-field="personality">
-              <input type="text" class="tag-input" placeholder="输入后按回车添加">
               ${(char?.personality || []).map(p => `<span class="tag">${escapeHtml(p)}<span class="tag-remove" onclick="removeTag(this, 'personality')">&times;</span></span>`).join('')}
+              <input type="text" class="tag-input" placeholder="输入后按回车添加">
+              <button type="button" class="tag-add-btn" onclick="openTagAddModal('personality')" title="添加性格标签">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </button>
             </div>
             <input type="hidden" name="personality" value="${(char?.personality || []).join(',')}">
           </div>
@@ -1549,11 +3157,11 @@
           <div class="form-group">
             <label class="form-label">特殊能力/技能</label>
             <div class="list-input-container">
-              <input type="text" class="form-input" id="newAbilityInput" placeholder="输入能力名称">
+              <input type="text" class="form-input" id="newAbilitiesInput" placeholder="输入能力名称">
               <button type="button" class="btn btn-secondary" onclick="addListItem('abilities')">添加</button>
             </div>
             <div class="list-items" id="abilitiesList">
-              ${(char?.abilities || []).map((a, i) => `<div class="list-item"><span>${escapeHtml(a)}</span><span class="list-item-remove" onclick="removeListItem(this, 'abilities')">&times;</span></div>`).join('')}
+              ${(char?.abilities || []).length > 0 ? (char?.abilities || []).map((a, i) => `<div class="list-item"><span class="list-item-content" ondblclick="editListItem(this, 'abilities')">${escapeHtml(a)}</span><div class="list-item-actions"><button class="list-item-btn remove" onclick="confirmRemoveListItem('abilities', this)" title="删除"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`).join('') : '<div class="list-empty-state">暂无能力，点击上方"添加"按钮添加</div>'}
             </div>
           </div>
         </form>
@@ -1561,6 +3169,130 @@
     }
 
     function renderTownForm(town) {
+      const regionType = town?.regionType || 'land';
+      
+      // 对于板块(land)使用垂直布局表单
+      if (regionType === 'land' || regionType === 'ocean' || !regionType) {
+        return renderLandForm(town);
+      }
+      
+      // 对于国家和城镇使用原来的表单
+      return renderCountryTownForm(town);
+    }
+
+    function renderLandForm(town) {
+      const countryOptions = data.towns
+        .filter(t => t.regionType === 'country')
+        .map(c => `<option value="${escapeHtml(c.name)}" ${town?.country === c.name ? 'selected' : ''}>${escapeHtml(c.name)}</option>`)
+        .join('');
+      
+      const raceOptions = data.races
+        .map(r => `<option value="${escapeHtml(r.name)}" ${town?.race === r.name ? 'selected' : ''}>${escapeHtml(r.name)}</option>`)
+        .join('');
+
+      const rumorsArray = town?.rumors ? JSON.parse(town.rumors) : [];
+
+      return `
+        <form id="itemForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label class="form-label required">板块名称</label>
+            <input type="text" class="form-input" name="name" value="${escapeHtml(town?.name || '')}" 
+                   placeholder="输入板块名称（最多50字符）" maxlength="50" 
+                   onblur="validateName(this)">
+            <div class="form-error" id="nameError">请输入板块名称</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">板块类型</label>
+            <select class="form-select" name="regionType">
+              <option value="unknown" ${!town?.regionType || town.regionType === 'unknown' ? 'selected' : ''}>未知</option>
+              <option value="land" ${town?.regionType === 'land' ? 'selected' : ''}>大陆</option>
+              <option value="ocean" ${town?.regionType === 'ocean' ? 'selected' : ''}>海洋</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">板块简介</label>
+            <textarea class="form-textarea" name="description" rows="3" maxlength="200"
+                      placeholder="描述板块（最多200字符）">${escapeHtml(town?.description || '')}</textarea>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">所在国家</label>
+            <div class="combo-selector">
+              <select class="form-select" name="country">
+                <option value="">请选择国家</option>
+                ${countryOptions}
+              </select>
+              <button type="button" class="btn btn-secondary" onclick="openCountryModal()" style="padding: 0 12px;">
+                <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none;">
+                  <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">原生种族</label>
+            <select class="form-select" name="race">
+              <option value="">请选择种族</option>
+              ${raceOptions}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">板块传闻</label>
+            <div class="rich-text-editor">
+              <div class="rich-text-toolbar">
+                <button type="button" class="rich-text-btn" onclick="applyFormat('bold')" title="粗体">
+                  <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none;">
+                    <path d="M6 4h6a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H6z"/><path d="M14 4h6a4 4 0 0 1 4 4v2a4 4 0 0 1-4 4h-6z"/>
+                  </svg>
+                </button>
+                <button type="button" class="rich-text-btn" onclick="applyFormat('italic')" title="斜体">
+                  <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none;">
+                    <path d="M14 4h6a4 4 0 0 1 4 4v8a4 4 0 0 1-4 4H6z"/>
+                  </svg>
+                </button>
+                <button type="button" class="rich-text-btn" onclick="applyFormat('underline')" title="下划线">
+                  <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none;">
+                    <path d="M6 4h12"/><path d="M6 20h12"/><path d="M6 12h12"/>
+                  </svg>
+                </button>
+                <button type="button" class="rich-text-btn" onclick="addRumorItem()" title="添加传闻">
+                  <svg viewBox="0 0 24 24" style="width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none;">
+                    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                </button>
+              </div>
+              <div class="rich-text-content" id="rumorsEditor">
+                ${rumorsArray.length > 0 ? rumorsArray.map((rumor, index) => `
+                  <div class="rich-text-item">
+                    <span class="rich-text-item-content" contenteditable="true" onkeydown="handleRumorKeydown(event, ${index})" 
+                          onblur="updateRumor(${index}, this.innerText)">${escapeHtml(rumor.content || '')}</span>
+                    <div class="rich-text-item-actions">
+                      <button type="button" class="rich-text-action-btn" onclick="editRumor(${index})" title="编辑">
+                        <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none;">
+                          <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                        </svg>
+                      </button>
+                      <button type="button" class="rich-text-action-btn" onclick="deleteRumor(${index})" title="删除">
+                        <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none;">
+                          <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                `).join('') : '<div style="color: var(--text-secondary); text-align: center; padding: 20px;">暂无传闻，点击上方按钮添加</div>'}
+              </div>
+            </div>
+            <input type="hidden" name="rumors" id="rumorsHiddenInput" value="${escapeHtml(town?.rumors || '[]')}">
+          </div>
+        </form>
+      `;
+    }
+
+    function renderCountryTownForm(town) {
       const terrainOptions = ['平原', '山脉', '海岸', '森林', '沙漠', '岛屿', '地下', '其他'].map(t => 
         `<option value="${t}" ${town?.terrain === t ? 'selected' : ''}>${t}</option>`
       ).join('');
@@ -1568,11 +3300,24 @@
         `<option value="${p}" ${town?.population === p ? 'selected' : ''}>${p}</option>`
       ).join('');
 
+      const isCountryOrTown = true;
+
       return `
         <form id="itemForm">
           <div class="form-group">
-            <label class="form-label required">城镇名称</label>
-            <input type="text" class="form-input" name="name" value="${escapeHtml(town?.name || '')}" placeholder="输入城镇名称">
+            <label class="form-label required">地区名称</label>
+            <input type="text" class="form-input" name="name" value="${escapeHtml(town?.name || '')}" placeholder="输入地区名称">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">地区类型</label>
+            <select class="form-select" name="regionType" onchange="toggleFactionFields(this.value)">
+              <option value="">请选择</option>
+              <option value="land" ${town?.regionType === 'land' ? 'selected' : ''}>大陆</option>
+              <option value="ocean" ${town?.regionType === 'ocean' ? 'selected' : ''}>海洋</option>
+              <option value="country" ${town?.regionType === 'country' ? 'selected' : ''}>国家</option>
+              <option value="town" ${town?.regionType === 'town' ? 'selected' : ''}>城镇</option>
+            </select>
           </div>
 
           <div class="form-row">
@@ -1589,6 +3334,28 @@
                 <option value="">请选择</option>
                 ${populationOptions}
               </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">联盟对象</label>
+            <div class="list-input-container">
+              <input type="text" class="form-input" id="newAlliesInput" placeholder="输入联盟对象名称">
+              <button type="button" class="btn btn-secondary" onclick="addListItem('allies')">添加</button>
+            </div>
+            <div class="list-items" id="alliesList">
+              ${(town?.allies || []).length > 0 ? (town?.allies || []).map((a, i) => `<div class="list-item"><span class="list-item-content" ondblclick="editListItem(this, 'allies')">${escapeHtml(a)}</span><div class="list-item-actions"><button class="list-item-btn remove" onclick="confirmRemoveListItem('allies', this)" title="删除"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`).join('') : '<div class="list-empty-state">暂无联盟对象，点击上方"添加"按钮添加</div>'}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">敌对对象</label>
+            <div class="list-input-container">
+              <input type="text" class="form-input" id="newEnemiesInput" placeholder="输入敌对对象名称">
+              <button type="button" class="btn btn-secondary" onclick="addListItem('enemies')">添加</button>
+            </div>
+            <div class="list-items" id="enemiesList">
+              ${(town?.enemies || []).length > 0 ? (town?.enemies || []).map((e, i) => `<div class="list-item"><span class="list-item-content" ondblclick="editListItem(this, 'enemies')">${escapeHtml(e)}</span><div class="list-item-actions"><button class="list-item-btn remove" onclick="confirmRemoveListItem('enemies', this)" title="删除"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`).join('') : '<div class="list-empty-state">暂无敌对对象，点击上方"添加"按钮添加</div>'}
             </div>
           </div>
 
@@ -1615,17 +3382,17 @@
           <div class="form-group">
             <label class="form-label">重要地标</label>
             <div class="list-input-container">
-              <input type="text" class="form-input" id="newLandmarkInput" placeholder="输入地标名称">
+              <input type="text" class="form-input" id="newLandmarksInput" placeholder="输入地标名称">
               <button type="button" class="btn btn-secondary" onclick="addListItem('landmarks')">添加</button>
             </div>
             <div class="list-items" id="landmarksList">
-              ${(town?.landmarks || []).map((l, i) => `<div class="list-item"><span>${escapeHtml(l)}</span><span class="list-item-remove" onclick="removeListItem(this, 'landmarks')">&times;</span></div>`).join('')}
+              ${(town?.landmarks || []).length > 0 ? (town?.landmarks || []).map((l, i) => `<div class="list-item"><span class="list-item-content" ondblclick="editListItem(this, 'landmarks')">${escapeHtml(l)}</span><div class="list-item-actions"><button class="list-item-btn remove" onclick="confirmRemoveListItem('landmarks', this)" title="删除"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`).join('') : '<div class="list-empty-state">暂无地标，点击上方"添加"按钮添加</div>'}
             </div>
           </div>
 
           <div class="form-group">
             <label class="form-label">历史背景</label>
-            <textarea class="form-textarea" name="history" placeholder="描述城镇的历史...">${escapeHtml(town?.history || '')}</textarea>
+            <textarea class="form-textarea" name="history" placeholder="描述地区的历史...">${escapeHtml(town?.history || '')}</textarea>
           </div>
 
           <div class="form-group">
@@ -1677,16 +3444,254 @@
           <div class="form-group">
             <label class="form-label">特殊能力</label>
             <div class="list-input-container">
-              <input type="text" class="form-input" id="newAbilityInput" placeholder="输入能力名称">
+              <input type="text" class="form-input" id="newAbilitiesInput" placeholder="输入能力名称">
               <button type="button" class="btn btn-secondary" onclick="addListItem('abilities')">添加</button>
             </div>
             <div class="list-items" id="abilitiesList">
-              ${(race?.abilities || []).map((a, i) => `<div class="list-item"><span>${escapeHtml(a)}</span><span class="list-item-remove" onclick="removeListItem(this, 'abilities')">&times;</span></div>`).join('')}
+              ${(race?.abilities || []).length > 0 ? (race?.abilities || []).map((a, i) => `<div class="list-item"><span class="list-item-content" ondblclick="editListItem(this, 'abilities')">${escapeHtml(a)}</span><div class="list-item-actions"><button class="list-item-btn remove" onclick="confirmRemoveListItem('abilities', this)" title="删除"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`).join('') : '<div class="list-empty-state">暂无能力，点击上方"添加"按钮添加</div>'}
             </div>
           </div>
         </form>
       `;
     }
+
+    // Rich Text Editor Functions
+    function applyFormat(format) {
+      const editor = document.getElementById('rumorsEditor');
+      if (!editor) return;
+      
+      const selection = window.getSelection();
+      if (!selection.rangeCount) return;
+      
+      const range = selection.getRangeAt(0);
+      const selectedText = range.toString();
+      
+      if (!selectedText) return;
+      
+      let formattedText = '';
+      switch(format) {
+        case 'bold':
+          formattedText = `<strong>${selectedText}</strong>`;
+          break;
+        case 'italic':
+          formattedText = `<em>${selectedText}</em>`;
+          break;
+        case 'underline':
+          formattedText = `<u>${selectedText}</u>`;
+          break;
+      }
+      
+      range.deleteContents();
+      const fragment = range.createContextualFragment(formattedText);
+      range.insertNode(fragment);
+      
+      updateRumorsHiddenInput();
+    }
+
+    function addRumorItem() {
+      const editor = document.getElementById('rumorsEditor');
+      if (!editor) return;
+      
+      const emptyState = editor.querySelector('div[style*="text-align: center"]');
+      if (emptyState) {
+        emptyState.remove();
+      }
+      
+      const index = editor.querySelectorAll('.rich-text-item').length;
+      const newItem = document.createElement('div');
+      newItem.className = 'rich-text-item';
+      newItem.innerHTML = `
+        <span class="rich-text-item-content" contenteditable="true" onkeydown="handleRumorKeydown(event, ${index})" 
+              onblur="updateRumor(${index}, this.innerText)">输入传闻内容...</span>
+        <div class="rich-text-item-actions">
+          <button type="button" class="rich-text-action-btn" onclick="editRumor(${index})" title="编辑">
+            <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none;">
+              <path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+            </svg>
+          </button>
+          <button type="button" class="rich-text-action-btn" onclick="deleteRumor(${index})" title="删除">
+            <svg viewBox="0 0 24 24" style="width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none;">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </button>
+        </div>
+      `;
+      
+      editor.appendChild(newItem);
+      
+      const contentSpan = newItem.querySelector('.rich-text-item-content');
+      contentSpan.focus();
+      
+      updateRumorsHiddenInput();
+    }
+
+    function handleRumorKeydown(event, index) {
+      if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        addRumorItem();
+      }
+    }
+
+    function updateRumor(index, content) {
+      const items = document.querySelectorAll('.rich-text-item-content');
+      if (items[index]) {
+        items[index].innerText = content;
+      }
+      updateRumorsHiddenInput();
+    }
+
+    function editRumor(index) {
+      const items = document.querySelectorAll('.rich-text-item-content');
+      if (items[index]) {
+        items[index].focus();
+        items[index].select();
+      }
+    }
+
+    function deleteRumor(index) {
+      const editor = document.getElementById('rumorsEditor');
+      const items = editor.querySelectorAll('.rich-text-item');
+      
+      if (items[index]) {
+        items[index].remove();
+        
+        if (editor.querySelectorAll('.rich-text-item').length === 0) {
+          editor.innerHTML = '<div style="color: var(--text-secondary); text-align: center; padding: 20px;">暂无传闻，点击上方按钮添加</div>';
+        }
+      }
+      
+      updateRumorsHiddenInput();
+    }
+
+    function updateRumorsHiddenInput() {
+      const editor = document.getElementById('rumorsEditor');
+      const hiddenInput = document.getElementById('rumorsHiddenInput');
+      
+      if (!editor || !hiddenInput) return;
+      
+      const items = editor.querySelectorAll('.rich-text-item-content');
+      const rumors = Array.from(items).map(item => ({
+        content: item.innerHTML || item.innerText
+      }));
+      
+      hiddenInput.value = JSON.stringify(rumors);
+    }
+
+    // Validation Functions
+    function validateName(input) {
+      const errorElement = document.getElementById('nameError');
+      if (!input.value.trim()) {
+        input.classList.add('error');
+        errorElement.classList.add('show');
+        return false;
+      }
+      input.classList.remove('error');
+      errorElement.classList.remove('show');
+      return true;
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      
+      const nameInput = document.querySelector('input[name="name"]');
+      if (!validateName(nameInput)) {
+        return;
+      }
+      
+      updateRumorsHiddenInput();
+      
+      const form = document.getElementById('itemForm');
+      const formData = new FormData(form);
+      const dataObj = {};
+      
+      formData.forEach((value, key) => {
+        dataObj[key] = value;
+      });
+      
+      if (currentEditId) {
+        updateItem(currentSection, currentEditId, dataObj);
+      } else {
+        createItem(currentSection, dataObj);
+      }
+    }
+
+    // Country Modal Functions
+    function openCountryModal() {
+      const modal = document.createElement('div');
+      modal.id = 'countryModal';
+      modal.className = 'modal active';
+      modal.innerHTML = `
+        <div class="modal-overlay" onclick="closeCountryModal()"></div>
+        <div class="modal-content" style="width: 500px;">
+          <div class="modal-header">
+            <h3>创建国家</h3>
+            <button class="modal-close" onclick="closeCountryModal()">
+              <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="countryForm">
+              <div class="form-group">
+                <label class="form-label required">国家名称</label>
+                <input type="text" class="form-input" name="countryName" placeholder="输入国家名称">
+              </div>
+              <div class="form-group">
+                <label class="form-label">国家简介</label>
+                <textarea class="form-textarea" name="countryDesc" placeholder="描述国家..."></textarea>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-outline" onclick="closeCountryModal()">取消</button>
+            <button class="btn btn-primary" onclick="createCountry()">创建</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function closeCountryModal() {
+      const modal = document.getElementById('countryModal');
+      if (modal) {
+        modal.remove();
+      }
+    }
+
+    function createCountry() {
+      const form = document.getElementById('countryForm');
+      const name = form.querySelector('input[name="countryName"]').value.trim();
+      
+      if (!name) {
+        showToast('请输入国家名称', 'error');
+        return;
+      }
+      
+      const newCountry = {
+        id: 'country_' + Date.now(),
+        name: name,
+        regionType: 'country',
+        description: form.querySelector('textarea[name="countryDesc"]').value,
+        landmarks: [],
+        allies: [],
+        enemies: []
+      };
+      
+      data.towns.push(newCountry);
+      saveData();
+      
+      closeCountryModal();
+      showToast('国家创建成功', 'success');
+      
+      const townFormSelect = document.querySelector('#itemForm select[name="country"]');
+      if (townFormSelect) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        option.selected = true;
+        townFormSelect.appendChild(option);
+      }
+    }
+
     // Avatar Preview
     function updateAvatarPreview(value) {
       const preview = document.querySelector('.avatar-preview');
@@ -2003,19 +4008,141 @@
       if (!value) return;
 
       const list = document.getElementById(`${field}List`);
+      
+      // Remove empty state if exists
+      const emptyState = list.querySelector('.list-empty-state');
+      if (emptyState) emptyState.remove();
+
       const item = document.createElement('div');
       item.className = 'list-item';
-      item.innerHTML = `<span>${escapeHtml(value)}</span><span class="list-item-remove" onclick="removeListItem(this, '${field}')">&times;</span>`;
+      item.innerHTML = `<span class="list-item-content" ondblclick="editListItem(this, '${field}')">${escapeHtml(value)}</span><div class="list-item-actions"><button class="list-item-btn remove" onclick="confirmRemoveListItem('${field}', this)" title="删除"><svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>`;
       list.appendChild(item);
       input.value = '';
+      showToast('已添加', 'success');
     }
 
-    function removeListItem(el, field) {
-      el.parentElement.remove();
+    function editListItem(el, field) {
+      const text = el.textContent;
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = text;
+      input.className = 'list-item-input';
+      input.style.width = `${Math.max(text.length * 14 + 40, 100)}px`;
+      
+      el.parentNode.replaceChild(input, el);
+      input.focus();
+      input.select();
+      
+      input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          saveEdit(input, field);
+        } else if (e.key === 'Escape') {
+          cancelEdit(input, text);
+        }
+      });
+      
+      input.addEventListener('blur', function() {
+        saveEdit(input, field);
+      });
+    }
+
+    function saveEdit(input, field) {
+      const value = input.value.trim();
+      if (value) {
+        const span = document.createElement('span');
+        span.className = 'list-item-content';
+        span.innerHTML = `${escapeHtml(value)}`;
+        span.setAttribute('ondblclick', `editListItem(this, '${field}')`);
+        input.parentNode.replaceChild(span, input);
+        showToast('已保存', 'success');
+      } else {
+        cancelEdit(input, '');
+      }
+    }
+
+    function cancelEdit(input, originalText) {
+      const span = document.createElement('span');
+      span.className = 'list-item-content';
+      span.innerHTML = originalText ? `${escapeHtml(originalText)}` : '';
+      span.setAttribute('ondblclick', `editListItem(this, '${field}')`);
+      input.parentNode.replaceChild(span, input);
+    }
+
+    function confirmRemoveListItem(field, el) {
+      const listItem = el.closest('.list-item');
+      const itemText = listItem.querySelector('.list-item-content').textContent;
+      
+      showConfirmDialog(
+        '确认删除',
+        `确定要删除 "${itemText}" 吗？`,
+        function() {
+          removeListItem(field, listItem);
+          showToast('已删除', 'success');
+        }
+      );
+    }
+
+    function removeListItem(field, listItem) {
+      listItem.remove();
+      
+      const list = document.getElementById(`${field}List`);
+      if (list.querySelectorAll('.list-item').length === 0) {
+        list.innerHTML = '<div class="list-empty-state">暂无内容，点击上方"添加"按钮添加</div>';
+      }
     }
 
     function capitalize(str) {
       return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function toggleFactionFields(regionType) {
+      const factionFields = document.querySelectorAll('.faction-field');
+      const isCountryOrTown = regionType === 'country' || regionType === 'town';
+      factionFields.forEach(field => {
+        field.style.display = isCountryOrTown ? 'block' : 'none';
+      });
+    }
+
+    // Tag Add Modal
+    let currentTagField = '';
+
+    function openTagAddModal(field) {
+      currentTagField = field;
+      document.getElementById('tagAddModal').classList.add('active');
+      document.getElementById('tagInput').value = '';
+      document.getElementById('tagInput').focus();
+    }
+
+    function closeTagAddModal() {
+      document.getElementById('tagAddModal').classList.remove('active');
+      currentTagField = '';
+    }
+
+    function addTagFromModal() {
+      const input = document.getElementById('tagInput');
+      const value = input.value.trim();
+      
+      if (!value) {
+        showToast('请输入标签内容', 'error');
+        return;
+      }
+
+      const container = document.querySelector(`.tag-container[data-field="${currentTagField}"]`);
+      if (!container) {
+        closeTagAddModal();
+        return;
+      }
+
+      const tag = document.createElement('span');
+      tag.className = 'tag';
+      tag.innerHTML = `${escapeHtml(value)}<span class="tag-remove" onclick="removeTag(this, '${currentTagField}')">&times;</span>`;
+      
+      const tagInput = container.querySelector('.tag-input');
+      container.insertBefore(tag, tagInput);
+      
+      updateHiddenTags(currentTagField);
+      closeTagAddModal();
+      showToast('标签已添加', 'success');
     }
 
     // Save
@@ -2037,7 +4164,7 @@
       item.personality = personalityTags;
 
       // Get list items
-      ['abilities', 'landmarks'].forEach(field => {
+      ['abilities', 'landmarks', 'allies', 'enemies'].forEach(field => {
         const listItems = document.querySelectorAll(`#${field}List .list-item span:first-child`);
         item[field] = Array.from(listItems).map(l => l.textContent.trim());
       });
@@ -2048,7 +4175,7 @@
         return;
       }
       if (currentSection === 'towns' && !item.name) {
-        showToast('请输入城镇名称', 'error');
+        showToast('请输入地区名称', 'error');
         return;
       }
       if (currentSection === 'races' && !item.name) {
@@ -2074,6 +4201,25 @@
     }
 
     // Delete
+    function togglePin(type, id) {
+      const item = data[type].find(i => i.id === id);
+      if (!item) return;
+      
+      item.pinned = !item.pinned;
+      saveData();
+      
+      if (type === 'characters') {
+        data.characters.sort((a, b) => {
+          if (a.pinned && !b.pinned) return -1;
+          if (!a.pinned && b.pinned) return 1;
+          return 0;
+        });
+      }
+      
+      renderCurrentSection();
+      showToast(item.pinned ? '已置顶' : '已取消置顶', 'success');
+    }
+
     function deleteItem(type, id) {
       const item = data[type].find(i => i.id === id);
       if (!item) return;
